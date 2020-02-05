@@ -15,6 +15,7 @@ declare class PrinterModule {
     private listenToNativeEvent;
     private log;
     private initiatePrintReceipt;
+    printText(deviceId: string, value: string): Promise<void>;
     private printTestReceipt;
 }
 declare const printer: PrinterModule;

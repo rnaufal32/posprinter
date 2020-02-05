@@ -147,10 +147,46 @@ var PrinterModule = /** @class */ (function () {
             // fallback if something went wrong with rn fetch blob
         }
     };
+    PrinterModule.prototype.printText = function (deviceId, value) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                this.connectDevice(deviceId, 3000)
+                    .then(function () { return __awaiter(_this, void 0, void 0, function () {
+                    var cmd, e_1;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                cmd = [
+                                    printerCommand_1.printerCommand.setPrinter(printerCommand_1.PrinterConstants.Command.ALIGN, printerCommand_1.PrinterConstants.Command.ALIGN_CENTER),
+                                    printerCommand_1.printerCommand.setFont(1, 0, 2, 0),
+                                ];
+                                cmd.push(printerCommand_1.printerCommand.printLine('RECEIPT TITLE'));
+                                cmd.push(printerCommand_1.printerCommand.printLine(value));
+                                _a.label = 1;
+                            case 1:
+                                _a.trys.push([1, 3, , 4]);
+                                return [4 /*yield*/, this.printerModule.addCommands(cmd)];
+                            case 2:
+                                _a.sent();
+                                if (this.deviceEventEmitter)
+                                    this.deviceEventEmitter.remove();
+                                return [2 /*return*/];
+                            case 3:
+                                e_1 = _a.sent();
+                                return [3 /*break*/, 4];
+                            case 4: return [2 /*return*/];
+                        }
+                    });
+                }); });
+                return [2 /*return*/];
+            });
+        });
+    };
     // printer all commands to printer
     PrinterModule.prototype.printTestReceipt = function (storageUrl) {
         return __awaiter(this, void 0, void 0, function () {
-            var cmd, e_1;
+            var cmd, e_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -178,7 +214,7 @@ var PrinterModule = /** @class */ (function () {
                             this.deviceEventEmitter.remove();
                         return [2 /*return*/];
                     case 3:
-                        e_1 = _a.sent();
+                        e_2 = _a.sent();
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }

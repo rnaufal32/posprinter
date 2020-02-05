@@ -134,6 +134,24 @@ class PrinterModule {
         }
     }
 
+    public async printText(deviceId: string, value: string) : Promise<void> {
+        this.connectDevice(deviceId, 3000)
+            .then( async () => {
+                const cmd: PrinterCommand[] = [
+                    printerCommand.setPrinter(PrinterConstants.Command.ALIGN, PrinterConstants.Command.ALIGN_CENTER),
+                    printerCommand.setFont(1, 0, 2, 0),
+                ];
+                cmd.push(printerCommand.printLine('RECEIPT TITLE'));
+                cmd.push(printerCommand.printLine(value));
+                try {
+                    await this.printerModule.addCommands(cmd);
+                    if (this.deviceEventEmitter)
+                        this.deviceEventEmitter.remove();
+                    return;
+                } catch (e) { /** get rid of the linter error */ }
+            });
+    }
+
     // printer all commands to printer
     private async printTestReceipt(storageUrl?: string) {
         const cmd: PrinterCommand[] = [

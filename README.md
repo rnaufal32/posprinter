@@ -99,7 +99,6 @@ timeout: number //default 30000 ms
 ### Connect And Print
 To connect and automatically print on specific pos printer, the return will be `Promise<any>`
 ```javascript
-RNPosPrinter.connectAndPrintReceipt(deviceId);
 ```
 #### Option
 ```javascript
